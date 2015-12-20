@@ -9,9 +9,11 @@ import LokkaTransport from 'lokka-transport-http';
 import rootReducer from './reducers';
 import Counter from './containers/counter';
 
-const clinet = new Lokka({
+const client = new Lokka({
   transport: new LokkaTransport('http://localhost:4000')
 });
+
+window.client = client;
 
 const myStore = applyMiddleware(thunk)(createStore)(rootReducer);
 

@@ -6,6 +6,13 @@ import {
 
 let Count = 0;
 
+const throwRandomErrors = (pct) => {
+  const val = Math.random() * 100;
+  if(val <= pct) {
+    throw new Error('Internal Error');
+  }
+};
+
 const RootQuery = new GraphQLObjectType({
   name: 'CounterQuery',
   fields: () => ({
@@ -24,12 +31,14 @@ const Mutations = new GraphQLObjectType({
     add: {
       type: GraphQLInt,
       resolve() {
+        throwRandomErrors(40);
         return ++Count;
       }
     },
     remove: {
       type: GraphQLInt,
       resolve() {
+        throwRandomErrors(40);
         return --Count;
       }
     }
