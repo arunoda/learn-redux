@@ -6,8 +6,8 @@ import { add, remove } from '../actions/counter';
 const CounterComponent = connect(
   ({count, error}) => ({count, error}),
   (dispatch) => ({
-    add: () => add(dispatch),
-    remove: () => remove(dispatch)
+    add: () => dispatch(add()),
+    remove: () => dispatch(remove())
   })
 )(Counter);
 

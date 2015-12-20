@@ -1,12 +1,13 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
-import { createStore } from 'redux';
-import { connect, Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
 
-import baseReducer from './reducers';
+import rootReducer from './reducers';
 import Counter from './containers/counter';
 
-const myStore = createStore(baseReducer);
+const myStore = applyMiddleware(thunk)(createStore)(rootReducer);
 
 const Layout = () => (
   <Provider store={myStore}>

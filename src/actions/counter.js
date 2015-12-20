@@ -1,9 +1,13 @@
 import {ADD, REMOVE} from '../constants/action_types.js';
 
-export const add = (dispatch) => {
-  dispatch({type: ADD});
+export const add = () => {
+  return (dispatch) => {
+    dispatch({type: ADD});
+  };
 };
 
-export const remove = (dispatch) => {
-  dispatch({type: REMOVE});
+export const remove = () => {
+  return (dispatch) => {
+    dispatch({type: REMOVE});
+  };
 };
