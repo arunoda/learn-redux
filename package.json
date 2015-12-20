@@ -40,6 +40,7 @@
     "webpack-dev-server": "^1.12.1"
   },
   "dependencies": {
+    "cors": "^2.7.1",
     "express": "^4.13.3",
     "express-graphql": "^0.4.5",
     "graphql": "^0.4.14",
