@@ -3,9 +3,15 @@ import React from 'react';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
+import Lokka from 'lokka';
+import LokkaTransport from 'lokka-transport-http';
 
 import rootReducer from './reducers';
 import Counter from './containers/counter';
+
+const clinet = new Lokka({
+  transport: new LokkaTransport('http://localhost:4000')
+});
 
 const myStore = applyMiddleware(thunk)(createStore)(rootReducer);
 
@@ -21,3 +27,4 @@ const render = () => {
 
 myStore.subscribe(render);
 render();
+
