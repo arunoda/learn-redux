@@ -47,8 +47,8 @@ class Layout extends React.Component {
     const {count, error} = myStore.getState();
     return (
       <div>
-        {(error)? this.renderError(error): ""}
         <Counter count={count} add={add} remove={remove} />
+        {(error)? this.renderError(error): ""}
       </div>
     );
   }
