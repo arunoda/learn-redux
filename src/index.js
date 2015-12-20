@@ -1,6 +1,7 @@
-import { createStore } from 'redux';
 import ReactDOM from 'react-dom';
 import React from 'react';
+import { createStore } from 'redux';
+import { connect, Provider } from 'react-redux';
 
 const initialState = {count: 0, error: null};
 
@@ -9,14 +10,14 @@ const baseReducer = (state = initialState, action) => {
   switch(action.type) {
     case 'ADD':
       if(newState.count === 5) {
-        newState.error = "You can't increase more than five";
+        newState.error = 'You can\'t increase more than five';
         break;
       }
       newState.count++;
       break;
     case 'REMOVE':
       if(newState.count === 0) {
-        newState.error = "You can't remove anymore";
+        newState.error = 'You can\'t remove anymore';
         break;
       }
       newState.count--;
@@ -27,10 +28,14 @@ const baseReducer = (state = initialState, action) => {
 };
 
 const myStore = createStore(baseReducer);
-const add = () => myStore.dispatch({type: 'ADD'});
-const remove = () => myStore.dispatch({type: 'REMOVE'});
 
-const Counter = ({count, add, remove}) => (
+const ErrorBanner = ({error}) => (
+  <div style={{color: 'red'}}>
+    Error: {error}
+  </div>
+);
+
+const Counter = ({error, count, add, remove}) => (
   <div>
     <div>
       Count: {count}
@@ -39,28 +44,23 @@ const Counter = ({count, add, remove}) => (
       <button onClick={remove}>-</button>
       <button onClick={add}>+</button>
     </div>
+    {error? <ErrorBanner error={error} /> : null}
   </div>
 );
 
-class Layout extends React.Component {
-  render() {
-    const {count, error} = myStore.getState();
-    return (
-      <div>
-        <Counter count={count} add={add} remove={remove} />
-        {(error)? this.renderError(error): ""}
-      </div>
-    );
-  }
+const CounterComponent = connect(
+  ({count, error}) => ({count, error}),
+  (dispatch) => ({
+    add: () => dispatch({type: 'ADD'}),
+    remove: () => dispatch({type: 'REMOVE'})
+  })
+)(Counter);
 
-  renderError(error) {
-    return (
-      <div style={{color: 'red'}}>
-        Error: {error}
-      </div>
-    );
-  }
-}
+const Layout = () => (
+  <Provider store={myStore}>
+    <CounterComponent />
+  </Provider>
+);
 
 const render = () => {
   ReactDOM.render(<Layout />, document.getElementById('root'));
